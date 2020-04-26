@@ -1,0 +1,105 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<script src="~/Scripts/jquery.signalR-2.4.1.js"></script>
+<script src="~/signalr/hubs"></script>
+<br />
+<br />
+<br />
+<div class="row">
+    <div class="col-md-12">
+        <div id="divGiris">
+            <div class="row">
+                <div class="col-md-12">
+                    <input type="text" placeholder="Üye numarası" class="form-control" id="txtUyeNo" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12">
+                    <br />
+                    <input type="button" class="btn btn-primary btn-block" value="Giriş Yap" id="btnGirisYap" />
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div id="divOnayla" style="display:none">
+            <h3>Mobil uygulama üzerinden giriş onayı yapmanız gerekmektedir.</h3>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="divBasariliGiris" style="display:none">
+            <div class="alert alert-success" role="alert"><h3>Tebrikler Giriş Yaptınız.</h3></div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div id="divHataliKod" style="display:none">
+            <div class="alert alert-danger" role="alert"><h3>Hatalı Kod Girdiniz</h3></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var bildirim;
+    $(function () {
+        bildirim = $.connection.loginOperationHub;
+
+        bildirim.client.updateDurum = function () {
+            var txtUyeNo = $("#txtUyeNo").val();
+            var paramData = JSON.stringify({ "kullaniciId": txtUyeNo });
+            kullaniciDegisimKontrol(paramData)
+        }
+        $.connection.hub.start().done(function () {
+        }).fail(function (e) {
+            console.log(e);
+        })
+
+
+
+    })
+
+
+    $("#btnGirisYap").click(function () {
+        var txtUyeNo = $("#txtUyeNo").val();
+        bildirim.server.girisKayit(txtUyeNo);
+        $("#divGiris").css("display", "none");
+        $("#divOnayla").css("display", "block");
+        var paramData = JSON.stringify({ "kullaniciId": txtUyeNo });
+        kullaniciDegisimKontrol(paramData)
+    })
+
+    function kullaniciDegisimKontrol(paramData) {
+        $.ajax({
+            url: "/Home/KullaniciDurum",
+            type: "POST",
+            data: paramData,
+            dataType: "json",
+            contentType: "application/json; charset=utf-8",
+            success: function (gelenData) {
+                if (gelenData == 2) {
+                    $("#divGiris").css("display", "none");
+                    $("#divOnayla").css("display", "none");
+                    $("#divBasariliGiris").css("display", "block");
+                    $("#divHataliKod").css("display", "none");
+                }
+                else if (gelenData == 3) {
+                    $("#divGiris").css("display", "none");
+                    $("#divOnayla").css("display", "none");
+                    $("#divBasariliGiris").css("display", "none");
+                    $("#divHataliKod").css("display", "block");
+                }
+            },
+            error: function (x) {
+                alert(x);
+            }
+        })
+    }
+</script>
