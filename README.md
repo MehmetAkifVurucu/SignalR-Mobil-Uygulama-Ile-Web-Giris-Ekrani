@@ -8,3 +8,5 @@ Geliştirilen uygulamanın web giriş panelinde üye numarasını giren kullanı
 NOT: Giriş işlemi yapıldıktan sonra aynı üye numarası ile giriş yapılmış mobil uygulamadaki ekrana SMS ile kullanıcıya gönderilen kod girilir. Giriş butonuna tıklayınca kod doğru ise web uygulama arayüzünde (Gelen kod:2 ise doğrulandı; gelen kod:3 ise hata mesjının olduğu uyarı gösterilir.) mesaj gösterilir.
 
 NOT: Projede SignalR kullanımı öncelikli olduğu için SMS gönderimi yapılmadı. Bununla birlikte SMS gönderimi yapılmadığı için projede React Native ile geliştirilen uygulamanın App.Js dosyası eklendi ve mobil uygulamada oturum kısmı henüz oluşturulmadığından üye id mobil uygulama tarafında statik bir değer olarak gönderildi.
+
+NOT:Models klasöründeki Kullanici classına karşılık gelecenk tablo veritabanında oluşturulur.
