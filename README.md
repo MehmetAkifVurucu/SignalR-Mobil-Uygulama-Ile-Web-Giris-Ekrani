@@ -1,3 +1,4 @@
+http://akifvurucu.com/signalr-ile-authenticator-yapimi/
 # SignalR-Mobil-Uygulama-Ile-Web-Giris-Ekrani
 Geliştirilen uygulamanın web giriş panelinde üye numarasını giren kullanıcı edindiği kodu mobil uygulamaya girerek web üzerinden oturum açma işlemini gerçekleştirir.
 1)LoginOperaitonHub class' ında GirisKayit metodunda ilk ekranda kullanıcıdan alınan üye numarası ile tabloya kullanıcının kayıt işlemi yapılır.
